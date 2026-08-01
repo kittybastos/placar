@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Meu Placar · Parceiro Claro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12151C;--surf:#1B2028;--surf2:#232935;--line:#333B49;--red:#E23A2E;--gold:#F5C451;--mint:#35D0A5;--paper:#EDF1F7;--dim:#8C97A8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.45;padding:0 16px calc(28px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto}
+h1,h2{font-family:'Archivo Black',sans-serif;font-weight:400;margin:0;letter-spacing:-.4px}
+.num{font-family:'Barlow Condensed',sans-serif;font-variant-numeric:tabular-nums;font-weight:700}
+header{padding:26px 0 16px;text-align:center}
+.eyebrow{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--red);font-weight:700}
+h1{font-size:27px;margin:7px 0 5px}
+header p{margin:0;color:var(--dim);font-size:13px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:14px}
+.sec{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:12px}
+
+.counter{background:linear-gradient(160deg,#252C38 0%,#181D25 100%);border:1px solid var(--line);border-radius:18px;padding:22px 18px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.counter::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--red)}
+.big{font-size:96px;line-height:.85;color:#fff}
+.big.pop{animation:pop .45s ease}
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.22);color:var(--gold)}100%{transform:scale(1)}}
+.cap{font-size:13px;color:var(--dim);margin-top:6px}
+.tapline{display:flex;gap:10px;margin-top:18px}
+.tap{flex:1;border:0;border-radius:12px;padding:16px 8px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;cursor:pointer;background:var(--red);color:#fff}
+.tap.tv{background:#16332C;color:var(--mint);border:1px solid #1E5748}
+.tap:active{transform:translateY(1px)}
+.mini{margin-top:10px;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:10px;padding:9px;width:100%;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer}
+
+.split{display:flex;gap:10px;text-align:center;margin-top:16px}
+.split div{flex:1;background:#0F1218;border:1px solid var(--line);border-radius:11px;padding:11px 6px}
+.split .v{font-size:30px;line-height:1}
+.split .l{font-size:11px;color:var(--dim);margin-top:2px}
+.split .tvv{color:var(--mint)}
+
+.frase{border-color:#1E5748;background:linear-gradient(160deg,#17322B 0%,#151A21 70%)}
+.frase .sec{color:var(--mint)}
+.frase blockquote{margin:0;font-size:16px;line-height:1.5;font-weight:600;border-left:3px solid var(--mint);padding-left:12px}
+.frase p{font-size:12.5px;color:var(--dim);margin:12px 0 0;line-height:1.5}
+
+label{display:block;font-size:12px;color:var(--dim);margin:0 0 6px;font-weight:600}
+input{width:100%;background:#0F1218;border:1px solid var(--line);color:var(--paper);font-family:'Inter',sans-serif;font-size:16px;padding:12px;border-radius:10px}
+.btn{width:100%;border:0;border-radius:12px;padding:15px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;background:var(--gold);color:#1A1405}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim);font-size:13px;padding:12px;margin-top:8px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hint{font-size:12px;color:var(--dim);line-height:1.55;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:var(--gold);color:#1A1405;font-weight:700;font-size:13px;padding:11px 18px;border-radius:99px;opacity:0;transition:.28s;z-index:9;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Claro na loja · Ipatinga</div>
+  <h1>Meu Placar</h1>
+  <p id="hi">Marque toda vez que conseguir fechar um plano com a Karen Kellen.</p>
+</header>
+
+<div class="card" id="boxNome">
+  <label for="nome">Seu nome</label>
+  <input id="nome" placeholder="Ex: Rafael" autocomplete="off">
+  <button class="btn" id="btnNome" style="margin-top:12px">Começar</button>
+</div>
+
+<div class="counter" id="boxCount" hidden>
+  <div class="big num" id="total">0</div>
+  <div class="cap">pontos no mês</div>
+  <div class="split">
+    <div><div class="v num" id="vP">0</div><div class="l">planos</div></div>
+    <div><div class="v num tvv" id="vT">0</div><div class="l">TV</div></div>
+  </div>
+  <div class="tapline">
+    <button class="tap" id="addP">+1 plano</button>
+    <button class="tap tv" id="addT">+1 TV</button>
+  </div>
+  <button class="mini" id="undo">Errei, apagar o último</button>
+</div>
+
+<div class="card frase" id="boxFrase" hidden>
+  <div class="sec">A pergunta que vale ponto</div>
+  <blockquote>"A moça da Claro consegue ver se a TV da sua casa sai mais barata. Quer que eu chame ela rapidinho?"</blockquote>
+  <p>Não precisa saber preço, plano nem nada. É só perguntar e chamar. O ponto entra do mesmo jeito, feche o aparelho você.</p>
+</div>
+
+<div class="card" id="boxEnviar" hidden>
+  <div class="sec">Fim do dia</div>
+  <button class="btn" id="btnSend">Mandar meu número pra Karen Kellen</button>
+  <button class="btn ghost" id="btnReset">Zerar (virada de mês)</button>
+  <div class="hint">Seu número fica salvo neste celular. Manda pra Karen Kellen no fim do expediente pra entrar no placar da loja.</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== Karen Kellen: coloque seu WhatsApp com DDD entre as aspas, só números.
+   Ex: '5531999998888'. Deixando vazio, o botão copia o texto. ===== */
+const KITTY='';
+
+const K='meu_placar_parceiro_v1';
+let S;
+try{S=JSON.parse(localStorage.getItem(K))||{n:'',log:[]}}catch(e){S={n:'',log:[]}}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const hoje=()=>new Date().toISOString().slice(0,10);
+const cnt=t=>S.log.filter(x=>x.t===t).length;
+
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function render(){
+  const tem=!!S.n;
+  document.getElementById('boxNome').hidden=tem;
+  ['boxCount','boxFrase','boxEnviar'].forEach(i=>document.getElementById(i).hidden=!tem);
+  if(!tem) return;
+  document.getElementById('hi').textContent=S.n+', marque toda vez que conseguir fechar um plano com a Karen Kellen.';
+  const p=cnt('plano'),t=cnt('tv');
+  document.getElementById('vP').textContent=p;
+  document.getElementById('vT').textContent=t;
+  const el=document.getElementById('total');
+  el.textContent=p+t;
+}
+
+document.getElementById('btnNome').onclick=()=>{
+  const v=document.getElementById('nome').value.trim();
+  if(!v){document.getElementById('nome').focus();return}
+  S.n=v;save();render();
+};
+document.getElementById('nome').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('btnNome').click()});
+
+function add(t){
+  S.log.push({t,d:hoje(),ts:Date.now()});save();render();
+  const el=document.getElementById('total');el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');
+  toast(t==='plano'?'+1 plano marcado':'+1 TV marcada');
+}
+document.getElementById('addP').onclick=()=>add('plano');
+document.getElementById('addT').onclick=()=>add('tv');
+document.getElementById('undo').onclick=()=>{
+  if(!S.log.length){toast('Nada pra apagar');return}
+  S.log.pop();save();render();toast('Último apagado');
+};
+document.getElementById('btnReset').onclick=()=>{
+  if(!confirm('Zerar seu placar? Use só na virada do mês.'))return;
+  S.log=[];save();render();toast('Placar zerado');
+};
+
+document.getElementById('btnSend').onclick=async()=>{
+  const p=cnt('plano'),t=cnt('tv');
+  const d=S.log.filter(x=>x.d===hoje());
+  const txt=`Karen Kellen, fechando o dia 👊\n${S.n}\nHoje: ${d.filter(x=>x.t==='plano').length} plano(s) · ${d.filter(x=>x.t==='tv').length} TV\nMês: ${p} plano(s) · ${t} TV`;
+  if(KITTY){window.open('https://wa.me/'+KITTY+'?text='+encodeURIComponent(txt),'_blank');return}
+  try{await navigator.clipboard.writeText(txt);toast('Copiado — cole no WhatsApp da Karen Kellen')}
+  catch(e){prompt('Copie e mande pra Karen Kellen:',txt)}
+};
+
+render();
+</script>
+</body>
+</html>
